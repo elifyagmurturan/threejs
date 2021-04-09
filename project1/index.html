@@ -35,17 +35,24 @@
             camera.updateProjectionMatrix();
             });
 
-        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10,);
-        var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xFFCC00});
-        var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        scene.add(sphereMesh);
-
         var cubeGeometry = new THREE.CubeGeometry(1,1,1);
         var cubeMaterial = new THREE.MeshNormalMaterial();
         var cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
         cubeMesh.position.x = 3;
         cubeMesh.rotation.set(45,0,0);
         scene.add(cubeMesh);
+
+        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10,);
+        var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+
+        for(var i=0; i<35; i++){
+            var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            randomX = (Math.random()-0.5) * 15;
+            randomY = (Math.random()-0.5) * 15;
+            randomZ = (Math.random()-0.5) * 15;
+            sphereMesh.position.set(randomX, randomY, randomZ);
+            scene.add(sphereMesh);
+        }
 
         var light = new THREE.PointLight(0xFFFFFF, 1, 500);
         light.position.set(10,0,25);
