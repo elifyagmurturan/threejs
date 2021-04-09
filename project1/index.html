@@ -16,6 +16,7 @@
         scene = new THREE.Scene();
 
         camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
 
         renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setClearColor("#98ff98");
@@ -30,19 +31,28 @@
             camera.updateProjectionMatrix();
             });
 
-        var geometry = new THREE.SphereGeometry(1, 10, 10,);
-        var material = new THREE.MeshLambertMaterial({color: 0xFFCC00});
-        var mesh = new THREE.Mesh(geometry, material);
+        var sphereGeometry = new THREE.SphereGeometry(1, 10, 10,);
+        var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xFFCC00});
+        var sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        scene.add(sphereMesh);
 
-        scene.add(mesh);
+        var cubeGeometry = new THREE.CubeGeometry(1,1,1);
+        var cubeMaterial = new THREE.MeshNormalMaterial();
+        var cubeMesh = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        cubeMesh.position.x = 3;
+        cubeMesh.rotation.set(45,0,0);
+        scene.add(cubeMesh);
 
         var light = new THREE.PointLight(0xFFFFFF, 1, 500);
         light.position.set(10,0,25);
         scene.add(light);
 
-        camera.position.z = 5;
+        var render = function(){
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
 
-        renderer.render(scene, camera);
+        render();
 
     </script>
 </body>
