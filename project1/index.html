@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/102/three.js" ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.2/TweenMax.min.js"></script>
     <script>
-        var scene, camera, renderer;
+        var scene, camera, renderer, raycaster, mouse;
 
         scene = new THREE.Scene();
 
@@ -23,6 +23,10 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         document.body.appendChild(renderer.domElement);
+
+        raycaster = new THREE.Raycaster();
+        mouse = new THREE.Vector2();
+        
 
         window.addEventListener('resize', () => {
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -48,11 +52,23 @@
         scene.add(light);
 
         var render = function(){
+            cubeMesh.rotation.x += 0.01;
+            cubeMesh.rotation.y -= 0.01;
             requestAnimationFrame(render);
             renderer.render(scene, camera);
         }
 
         render();
+
+        this.tl = new TimelineMax({paused:true});
+        this.tl.to(this.cubeMesh.scale, 1, {x:0.5, ease: Expo.easeOut});
+        this.tl.to(this.cubeMesh.scale, 1, {x:1, ease: Expo.easeOut});
+        this.tl.to(this.cubeMesh.position, 1, {y:0.5, ease: Expo.easeOut});
+        this.tl.to(this.cubeMesh.rotation, 1, {z:1, ease: Expo.easeOut});
+
+        document.body.addEventListener('click', () => {
+            this.tl.play();
+        })
 
     </script>
 </body>
