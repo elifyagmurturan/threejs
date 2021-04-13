@@ -1,24 +1,41 @@
 import './style.css'
 import * as THREE from 'three';
-import { TetrahedronGeometry } from 'three';
 
-var scene, camera, renderer;
+var scene, camera, light, renderer;
 var geometry, material, mesh;
 
-scene = new THREE.Scene();
+function init(){
 
-geometry = new THREE.IcosahedronBufferGeometry(200, 1);
-material = new THREE.MeshBasicMaterial({
-  color: 0x000000, 
-  wireframe: true,
-  wireframeLinewidth: 2});
-mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+  scene = new THREE.Scene();
 
-camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 1, 1000);
-camera.position.z = 500;
+  camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
+  camera.position.z = 10;
 
-renderer = new THREE.CanvasRenderer();
-renderer.setSize(innerWidth, innerHeight);
-document.body.appendChild(renderer.domElement);
-renderer.render(scene, camera);
+  light =  new THREE.DirectionalLight(0xFFFFFF, 1);
+  light.position.set(0, 0, 1);
+  scene.add(light);
+
+  renderer = new THREE.WebGLRenderer();
+  renderer.setPixelRatio(devicePixelRatio);
+  renderer.setSize(innerWidth, innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  geometry = new THREE.IcosahedronGeometry(2, 1);
+  material = new THREE.MeshNormalMaterial();
+  mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
+
+
+}
+function animate() {
+  requestAnimationFrame(animate);
+
+  mesh.rotation.x = Date.now()* 0.00005;
+  mesh.rotation.y = Date.now()* 0.0001;
+
+  renderer.render(scene, camera);
+}
+
+
+init();
+animate();
