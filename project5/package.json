@@ -8,5 +8,9 @@
   },
   "devDependencies": {
     "vite": "^2.1.5"
+  },
+  "dependencies": {
+    "PointerLock.js": "https://github.com/IceCreamYou/PointerLock.js",
+    "bigscreen": "https://github.com/bdougherty/bigscreen"
   }
 }
